@@ -5,68 +5,67 @@ import random
 import os
 
 
-say = str(input("What to say (at most 52 characters): "))
+say = str(input("What to say: "))
 
-letters = list(say)
+saybit = list(say)
 identifier = ''
-past_ids = []
+
+ids = []
 
 def definewriter(token, string):
     scaryfile.write("#define %s %s\n" % (token, string))
 
-os.system("rm scary.c scary")
+
+def random_id():
+    return random.choice(string.ascii_letters) + str(random.randint(1, 100000))
 
 with open('scary.c', 'w+') as scaryfile:
     scaryfile.write("#include <stdio.h>\n\n")
     
-    for letter in letters:
-        identifier = random.choice(string.ascii_letters)
+    for bit in saybit:     
+        identifier = random_id()
         
-        if identifier in past_ids:
-            identifier += random.choice(string.ascii_letters)
-        
-        scaryfile.write('#define %s "%s"\n' % (identifier, letter))
-        
-        past_ids.append(identifier)
+        scaryfile.write('#define %s "%s"\n' % (identifier, bit))
+        ids.append(identifier)
 
     
-    intid = random.choice(string.ascii_letters) + str(random.randint(1, 50))
+    intid = random_id()
     # int main() {
     # ^^^
     
-    main = random.choice(string.ascii_letters) + str(random.randint(1, 50))
+    main = random_id()
     # int main() {
     #     ^^^^
     
-    oparen = random.choice(string.ascii_letters) + str(random.randint(1, 50))
+    oparen = random_id()
     # int main() {
     #         ^
 
-    cparen = random.choice(string.ascii_letters) + str(random.randint(1, 50))
+    cparen = random_id()
     # int main() {
     #          ^
 
-    ocurly = random.choice(string.ascii_letters) + str(random.randint(1, 50))
+    ocurly = random_id()
     # int main() {
     #            ^
 
-    printf = random.choice(string.ascii_letters) + str(random.randint(1, 50))
+    printf = random_id()
     #   printf();
     #   ^^^^^^
 
-    semico = random.choice(string.ascii_letters) + str(random.randint(1, 50))
+    semico = random_id()
     #   printf();
     #           ^
 
-    returnid = random.choice(string.ascii_letters) + str(random.randint(1, 50))
+    returnid = random_id()
     #   return 0;
     #   ^^^^^^
 
-    zero = random.choice(string.ascii_letters) + str(random.randint(1, 50))
+    zero = random_id()
     #   return 0;
     #          ^
 
-    ccurly = random.choice(string.ascii_letters) + str(random.randint(1, 50))
+    ccurly = random_id()
     # }
     # ^
 
@@ -96,7 +95,7 @@ with open('scary.c', 'w+') as scaryfile:
                                                             ocurly=ocurly
                                                             ))
 
-    string = ' '.join(past_ids)
+    string = ' '.join(ids)
 
     scaryfile.write('{printf} {oparen} {string} {cparen} {semico}\n'.format(
                                                             printf=printf,
