@@ -41,3 +41,4 @@ It probably works with any string up to 52 characters.
 
 - Randomly indent code
 - Put `#define`s in a random order
+- add more `#define`s for characters that occur regularly (`;` etc)
