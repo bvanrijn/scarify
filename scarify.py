@@ -29,35 +29,35 @@ def main():
             scaryfile.write(f'#define {identifier} "{bit}"\n')
             ids.append(identifier)
 
-        intid = random_id()
+        kw_int = random_id()
         # int main() {
         # ^^^
 
-        main = random_id()
+        main_function = random_id()
         # int main() {
         #     ^^^^
 
-        oparen = random_id()
+        left_paren = random_id()
         # int main() {
         #         ^
 
-        cparen = random_id()
+        right_paren = random_id()
         # int main() {
         #          ^
 
-        ocurly = random_id()
+        left_brace = random_id()
         # int main() {
         #            ^
 
-        printf = random_id()
+        printf_function = random_id()
         #   printf();
         #   ^^^^^^
 
-        semico = random_id()
+        semicolon = random_id()
         #   printf();
         #           ^
 
-        returnid = random_id()
+        kw_return = random_id()
         #   return 0;
         #   ^^^^^^
 
@@ -65,36 +65,40 @@ def main():
         #   return 0;
         #          ^
 
-        ccurly = random_id()
+        right_brace = random_id()
         # }
         # ^
 
-        write_define(scaryfile, intid, "int")
-        write_define(scaryfile, main, "main")
+        write_define(scaryfile, kw_int, "int")
+        write_define(scaryfile, main_function, "main")
 
-        write_define(scaryfile, oparen, "(")
-        write_define(scaryfile, cparen, ")")
+        write_define(scaryfile, left_paren, "(")
+        write_define(scaryfile, right_paren, ")")
 
-        write_define(scaryfile, ocurly, "{")
-        write_define(scaryfile, ccurly, "}")
+        write_define(scaryfile, left_brace, "{")
+        write_define(scaryfile, right_brace, "}")
 
-        write_define(scaryfile, printf, "printf")
+        write_define(scaryfile, printf_function, "printf")
 
-        write_define(scaryfile, semico, ";")
+        write_define(scaryfile, semicolon, ";")
 
-        write_define(scaryfile, returnid, "return")
+        write_define(scaryfile, kw_return, "return")
 
         write_define(scaryfile, zero, "0")
 
-        scaryfile.write(f"\n{intid} {main} {oparen} {cparen} {ocurly}\n")
+        scaryfile.write(
+            f"\n{kw_int} {main_function} {left_paren} {right_paren} {left_brace}\n"
+        )
 
         string = " ".join(ids)
 
-        scaryfile.write(f"{printf} {oparen} {string} {cparen} {semico}\n")
+        scaryfile.write(
+            f"{printf_function} {left_paren} {string} {right_paren} {semicolon}\n"
+        )
 
-        scaryfile.write(f"{returnid} {zero} {semico}\n")
+        scaryfile.write(f"{kw_return} {zero} {semicolon}\n")
 
-        scaryfile.write(ccurly + "\n")
+        scaryfile.write(right_brace + "\n")
 
     os.system("make scary")
 
