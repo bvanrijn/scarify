@@ -1,0 +1,7 @@
+{
+  "python.pythonPath": "/Users/barend/.local/share/virtualenvs/scarify-RoLIFVnC/bin/python",
+  "python.linting.flake8Args": ["--max-line-length=88"],
+  "[python]": {
+    "editor.rulers": [88]
+  }
+}
