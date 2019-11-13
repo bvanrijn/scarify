@@ -5,7 +5,7 @@ import random
 import os
 
 
-def definewriter(f, token, string):
+def write_define(f, token, string):
     f.write(f"#define {token} {string}\n")
 
 
@@ -69,22 +69,22 @@ def main():
         # }
         # ^
 
-        definewriter(scaryfile, intid, "int")
-        definewriter(scaryfile, main, "main")
+        write_define(scaryfile, intid, "int")
+        write_define(scaryfile, main, "main")
 
-        definewriter(scaryfile, oparen, "(")
-        definewriter(scaryfile, cparen, ")")
+        write_define(scaryfile, oparen, "(")
+        write_define(scaryfile, cparen, ")")
 
-        definewriter(scaryfile, ocurly, "{")
-        definewriter(scaryfile, ccurly, "}")
+        write_define(scaryfile, ocurly, "{")
+        write_define(scaryfile, ccurly, "}")
 
-        definewriter(scaryfile, printf, "printf")
+        write_define(scaryfile, printf, "printf")
 
-        definewriter(scaryfile, semico, ";")
+        write_define(scaryfile, semico, ";")
 
-        definewriter(scaryfile, returnid, "return")
+        write_define(scaryfile, returnid, "return")
 
-        definewriter(scaryfile, zero, "0")
+        write_define(scaryfile, zero, "0")
 
         scaryfile.write(f"\n{intid} {main} {oparen} {cparen} {ocurly}\n")
 
