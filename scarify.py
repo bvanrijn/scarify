@@ -5,108 +5,116 @@ import random
 import os
 
 
-say = str(input("What to say: "))
-
-saybit = list(say)
-identifier = ""
-
-ids = []
-
-
-def definewriter(token, string):
-    scaryfile.write("#define %s %s\n" % (token, string))
+def definewriter(f, token, string):
+    f.write("#define %s %s\n" % (token, string))
 
 
 def random_id():
     return random.choice(string.ascii_letters) + str(random.randint(1, 100000))
 
 
-with open("scary.c", "w+") as scaryfile:
-    scaryfile.write("#include <stdio.h>\n\n")
+def main():
+    say = str(input("What to say: "))
 
-    for bit in saybit:
-        identifier = random_id()
+    saybit = list(say)
+    identifier = ""
 
-        scaryfile.write('#define %s "%s"\n' % (identifier, bit))
-        ids.append(identifier)
+    ids = []
 
-    intid = random_id()
-    # int main() {
-    # ^^^
+    with open("scary.c", "w+") as scaryfile:
+        scaryfile.write("#include <stdio.h>\n\n")
 
-    main = random_id()
-    # int main() {
-    #     ^^^^
+        for bit in saybit:
+            identifier = random_id()
 
-    oparen = random_id()
-    # int main() {
-    #         ^
+            scaryfile.write('#define %s "%s"\n' % (identifier, bit))
+            ids.append(identifier)
 
-    cparen = random_id()
-    # int main() {
-    #          ^
+        intid = random_id()
+        # int main() {
+        # ^^^
 
-    ocurly = random_id()
-    # int main() {
-    #            ^
+        main = random_id()
+        # int main() {
+        #     ^^^^
 
-    printf = random_id()
-    #   printf();
-    #   ^^^^^^
+        oparen = random_id()
+        # int main() {
+        #         ^
 
-    semico = random_id()
-    #   printf();
-    #           ^
+        cparen = random_id()
+        # int main() {
+        #          ^
 
-    returnid = random_id()
-    #   return 0;
-    #   ^^^^^^
+        ocurly = random_id()
+        # int main() {
+        #            ^
 
-    zero = random_id()
-    #   return 0;
-    #          ^
+        printf = random_id()
+        #   printf();
+        #   ^^^^^^
 
-    ccurly = random_id()
-    # }
-    # ^
+        semico = random_id()
+        #   printf();
+        #           ^
 
-    definewriter(intid, "int")
-    definewriter(main, "main")
+        returnid = random_id()
+        #   return 0;
+        #   ^^^^^^
 
-    definewriter(oparen, "(")
-    definewriter(cparen, ")")
+        zero = random_id()
+        #   return 0;
+        #          ^
 
-    definewriter(ocurly, "{")
-    definewriter(ccurly, "}")
+        ccurly = random_id()
+        # }
+        # ^
 
-    definewriter(printf, "printf")
+        definewriter(scaryfile, intid, "int")
+        definewriter(scaryfile, main, "main")
 
-    definewriter(semico, ";")
+        definewriter(scaryfile, oparen, "(")
+        definewriter(scaryfile, cparen, ")")
 
-    definewriter(returnid, "return")
+        definewriter(scaryfile, ocurly, "{")
+        definewriter(scaryfile, ccurly, "}")
 
-    definewriter(zero, "0")
+        definewriter(scaryfile, printf, "printf")
 
-    scaryfile.write(
-        "\n{int} {main} {oparen} {cparen} {ocurly}\n".format(
-            int=intid, main=main, oparen=oparen, cparen=cparen, ocurly=ocurly
+        definewriter(scaryfile, semico, ";")
+
+        definewriter(scaryfile, returnid, "return")
+
+        definewriter(scaryfile, zero, "0")
+
+        scaryfile.write(
+            "\n{int} {main} {oparen} {cparen} {ocurly}\n".format(
+                int=intid, main=main, oparen=oparen, cparen=cparen, ocurly=ocurly
+            )
         )
-    )
 
-    string = " ".join(ids)
+        string = " ".join(ids)
 
-    scaryfile.write(
-        "{printf} {oparen} {string} {cparen} {semico}\n".format(
-            printf=printf, oparen=oparen, string=string, cparen=cparen, semico=semico
+        scaryfile.write(
+            "{printf} {oparen} {string} {cparen} {semico}\n".format(
+                printf=printf,
+                oparen=oparen,
+                string=string,
+                cparen=cparen,
+                semico=semico,
+            )
         )
-    )
 
-    scaryfile.write(
-        "{returnid} {zero} {semico}\n".format(
-            returnid=returnid, zero=zero, semico=semico
+        scaryfile.write(
+            "{returnid} {zero} {semico}\n".format(
+                returnid=returnid, zero=zero, semico=semico
+            )
         )
-    )
 
-    scaryfile.write("{ccurly}\n".format(ccurly=ccurly))
+        scaryfile.write("{ccurly}\n".format(ccurly=ccurly))
 
-os.system("make scary")
+    os.system("make scary")
+
+
+if __name__ == "__main__":
+    main()
