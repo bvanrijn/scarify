@@ -30,44 +30,15 @@ def main():
             ids.append(identifier)
 
         kw_int = random_id()
-        # int main() {
-        # ^^^
-
         main_function = random_id()
-        # int main() {
-        #     ^^^^
-
         left_paren = random_id()
-        # int main() {
-        #         ^
-
         right_paren = random_id()
-        # int main() {
-        #          ^
-
         left_brace = random_id()
-        # int main() {
-        #            ^
-
-        printf_function = random_id()
-        #   printf();
-        #   ^^^^^^
-
-        semicolon = random_id()
-        #   printf();
-        #           ^
-
-        kw_return = random_id()
-        #   return 0;
-        #   ^^^^^^
-
-        zero = random_id()
-        #   return 0;
-        #          ^
-
         right_brace = random_id()
-        # }
-        # ^
+        printf_function = random_id()
+        semicolon = random_id()
+        kw_return = random_id()
+        zero = random_id()  # the 0 in "return 0;"
 
         write_define(scaryfile, kw_int, "int")
         write_define(scaryfile, main_function, "main")
