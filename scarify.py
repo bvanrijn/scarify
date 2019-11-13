@@ -6,7 +6,7 @@ import os
 
 
 def definewriter(f, token, string):
-    f.write("#define %s %s\n" % (token, string))
+    f.write(f"#define {token} {string}\n")
 
 
 def random_id():
@@ -27,7 +27,7 @@ def main():
         for bit in saybit:
             identifier = random_id()
 
-            scaryfile.write('#define %s "%s"\n' % (identifier, bit))
+            scaryfile.write(f'#define {identifier} "{bit}"\n')
             ids.append(identifier)
 
         intid = random_id()
@@ -87,31 +87,15 @@ def main():
 
         definewriter(scaryfile, zero, "0")
 
-        scaryfile.write(
-            "\n{int} {main} {oparen} {cparen} {ocurly}\n".format(
-                int=intid, main=main, oparen=oparen, cparen=cparen, ocurly=ocurly
-            )
-        )
+        scaryfile.write(f"\n{intid} {main} {oparen} {cparen} {ocurly}\n")
 
         string = " ".join(ids)
 
-        scaryfile.write(
-            "{printf} {oparen} {string} {cparen} {semico}\n".format(
-                printf=printf,
-                oparen=oparen,
-                string=string,
-                cparen=cparen,
-                semico=semico,
-            )
-        )
+        scaryfile.write(f"{printf} {oparen} {string} {cparen} {semico}\n")
 
-        scaryfile.write(
-            "{returnid} {zero} {semico}\n".format(
-                returnid=returnid, zero=zero, semico=semico
-            )
-        )
+        scaryfile.write(f"{returnid} {zero} {semico}\n")
 
-        scaryfile.write("{ccurly}\n".format(ccurly=ccurly))
+        scaryfile.write(ccurly + "\n")
 
     os.system("make scary")
 
