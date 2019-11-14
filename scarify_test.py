@@ -1,4 +1,6 @@
 import random
+import subprocess
+import tempfile
 
 from scarify import Scarifier
 
@@ -26,3 +28,22 @@ def test_random_id():
 
     assert letter.isalpha() is True
     assert number.isnumeric() is True
+
+
+def test_make_scary():
+    scarifier = Scarifier()
+    text = "Hello, World!"
+    source_code = scarifier.make_scary(text)
+
+    with tempfile.TemporaryDirectory():
+        with open("scary.c", "w+") as f:
+            f.write(source_code)
+
+        subprocess.call("gcc scary.c -o scary".split(" "))
+
+        p = subprocess.Popen(["./scary"], stdout=subprocess.PIPE)
+        p.wait()  # TODO: Fail the test if p.returncode != 0
+
+        stdout = p.stdout.read().decode()
+
+        assert stdout == "Hello, World!"
