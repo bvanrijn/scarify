@@ -70,8 +70,7 @@ class Scarifier:
 
 def main() -> None:
     what_to_say = str(input("What to say: "))
-    scarifier: Scarifier = Scarifier()
-    scary_source_code = scarifier.make_scary(what_to_say)
+    scary_source_code = Scarifier().make_scary(what_to_say)
 
     with open("scary.c", "w+") as scary_file:
         scary_file.write(scary_source_code)
