@@ -25,7 +25,7 @@ class Scarifier:
 
     @staticmethod
     def _random_id():
-        return random.choice(string.ascii_letters) + str(random.randint(1, 100000))
+        return random.choice(string.ascii_letters) + str(random.randint(1, 100_000))
 
     def _tokens_to_identifier(self, tokens, with_newline=True):
         identifier = []
