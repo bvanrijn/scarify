@@ -2,10 +2,11 @@
 
 import random
 import string
+from typing import List
 
 
 class Scarifier:
-    def __init__(self):
+    def __init__(self) -> None:
         self._tokens = {
             "int": Scarifier._random_id(),
             "main": Scarifier._random_id(),
@@ -20,14 +21,16 @@ class Scarifier:
         }
 
     @staticmethod
-    def _define(identifier, token):
+    def _define(identifier: str, token: str) -> str:
         return f"#define {identifier} {token}\n"
 
     @staticmethod
-    def _random_id():
+    def _random_id() -> str:
         return random.choice(string.ascii_letters) + str(random.randint(1, 100_000))
 
-    def _tokens_to_identifier(self, tokens, with_newline=True):
+    def _tokens_to_identifier(
+        self, tokens: List[str], with_newline: bool = True
+    ) -> str:
         identifier = []
 
         for token in tokens:
@@ -38,7 +41,7 @@ class Scarifier:
 
         return " ".join(identifier)
 
-    def make_scary(self, text):
+    def make_scary(self, text: str) -> str:
         source_code = "#include <stdio.h>\n\n"
         ids = []
 
@@ -53,21 +56,21 @@ class Scarifier:
 
         source_code += "\n"
 
-        source_code += self._tokens_to_identifier(("int", "main", "(", ")", "{"))
+        source_code += self._tokens_to_identifier(["int", "main", "(", ")", "{"])
 
-        source_code += self._tokens_to_identifier(("printf", "("), with_newline=False)
+        source_code += self._tokens_to_identifier(["printf", "("], with_newline=False)
         source_code += " " + " ".join(ids)
-        source_code += " " + self._tokens_to_identifier((")", ";"))
+        source_code += " " + self._tokens_to_identifier([")", ";"])
 
-        source_code += self._tokens_to_identifier(("return", "0", ";"))
-        source_code += self._tokens_to_identifier(("}"))
+        source_code += self._tokens_to_identifier(["return", "0", ";"])
+        source_code += self._tokens_to_identifier(["}"])
 
         return source_code
 
 
-def main():
+def main() -> None:
     what_to_say = str(input("What to say: "))
-    scarifier = Scarifier()
+    scarifier: Scarifier = Scarifier()
     scary_source_code = scarifier.make_scary(what_to_say)
 
     with open("scary.c", "w+") as scary_file:

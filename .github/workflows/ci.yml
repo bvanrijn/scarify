@@ -17,5 +17,7 @@ jobs:
         run: pipenv run fmt-check
       - name: Lint
         run: pipenv run lint
+      - name: Typecheck
+        run: pipenv run typecheck
       - name: Test
         run: pipenv run test

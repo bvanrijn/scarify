@@ -1,3 +1,5 @@
 scary
 scary.c
 .pytest_cache
+.mypy_cache
+.idea

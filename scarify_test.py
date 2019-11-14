@@ -7,19 +7,19 @@ from scarify import Scarifier
 random.seed(42)
 
 
-def test_define_keyword():
+def test_define_keyword() -> None:
     scarifier = Scarifier()
 
     assert scarifier._define("foo", "return") == "#define foo return\n"
 
 
-def test_define_letter():
+def test_define_letter() -> None:
     scarifier = Scarifier()
 
     assert scarifier._define("foo", '"f"') == '#define foo "f"\n'
 
 
-def test_random_id():
+def test_random_id() -> None:
     scarifier = Scarifier()
 
     random_id = scarifier._random_id()
@@ -30,7 +30,7 @@ def test_random_id():
     assert number.isnumeric() is True
 
 
-def test_make_scary():
+def test_make_scary() -> None:
     scarifier = Scarifier()
     text = "Hello, World!"
     source_code = scarifier.make_scary(text)
