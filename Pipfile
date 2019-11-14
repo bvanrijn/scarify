@@ -12,3 +12,8 @@ black = "*"
 
 [requires]
 python_version = "3.7"
+
+[scripts]
+test = "pytest"
+fmt = "black ."
+fmt-check = "black --check --diff ."
