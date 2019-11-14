@@ -39,7 +39,7 @@ def main():
             "0": random_id(),  # the 0 in "return 0;"
         }
 
-        for (keyword, identifier) in keywords:
+        for (keyword, identifier) in keywords.items():
             scary_file.write(define(keyword, identifier))
 
         K = keywords
