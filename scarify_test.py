@@ -29,8 +29,7 @@ def test_random_id() -> None:
     assert letter.isalpha() is True
     assert number.isnumeric() is True
 
-    number = int(number)
-    assert number >= 1 and number <= 100_000
+    assert int(number) >= 1 and int(number) <= 100_000
 
 
 def test_make_scary() -> None:
