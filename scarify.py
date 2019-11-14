@@ -26,7 +26,7 @@ def main():
 
             ids.append(identifier)
 
-        keywords = {
+        tokens = {
             "int": random_id(),
             "main": random_id(),
             "(": random_id(),
@@ -39,17 +39,17 @@ def main():
             "0": random_id(),  # the 0 in "return 0;"
         }
 
-        for (keyword, identifier) in keywords.items():
-            scary_file.write(define(keyword, identifier))
+        for (token, identifier) in tokens.items():
+            scary_file.write(define(token, identifier))
 
-        K = keywords
+        T = tokens
 
         # TODO: Make a function that takes a tuple of tokens and converts them to a string
         # with their new identifier
-        scary_file.write(f"\n{K['int']} {K['main']} {K['(']} {K[')']} {K['{']}\n")
-        scary_file.write(f"{K['printf']} {K['(']} {' '.join(ids)} {K[')']} {K[';']}\n")
-        scary_file.write(f"{K['return']} {K['0']} {K[';']}\n")
-        scary_file.write(K["}"] + "\n")
+        scary_file.write(f"\n{T['int']} {T['main']} {T['(']} {T[')']} {T['{']}\n")
+        scary_file.write(f"{T['printf']} {T['(']} {' '.join(ids)} {T[')']} {T[';']}\n")
+        scary_file.write(f"{T['return']} {T['0']} {T[';']}\n")
+        scary_file.write(T["}"] + "\n")
 
 
 if __name__ == "__main__":
