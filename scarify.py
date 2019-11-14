@@ -28,7 +28,7 @@ class Scarifier:
     def _random_id() -> str:
         return random.choice(string.ascii_letters) + str(random.randint(1, 100_000))
 
-    def _tokens_to_identifier(
+    def _tokens_to_replacements(
         self, tokens: List[str], with_newline: bool = True
     ) -> str:
         identifier = []
@@ -56,13 +56,13 @@ class Scarifier:
 
         source_code += "\n"
 
-        source_code += self._tokens_to_identifier(["int", "main", "(", ")", "{"])
+        source_code += self._tokens_to_replacements(["int", "main", "(", ")", "{"])
 
-        source_code += self._tokens_to_identifier(["printf", "("], with_newline=False)
+        source_code += self._tokens_to_replacements(["printf", "("], with_newline=False)
         source_code += " " + " ".join(ids)
-        source_code += " " + self._tokens_to_identifier([")", ";"])
+        source_code += " " + self._tokens_to_replacements([")", ";"])
 
-        source_code += self._tokens_to_identifier(["return", "0", ";"])
+        source_code += self._tokens_to_replacements(["return", "0", ";"])
         source_code += self._tokens_to_identifier(["}"])
 
         return source_code
