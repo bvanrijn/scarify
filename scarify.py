@@ -2,7 +2,6 @@
 
 import string
 import random
-import os
 
 
 def define(identifier, letter):
@@ -51,8 +50,6 @@ def main():
         scary_file.write(f"{K['printf']} {K['(']} {' '.join(ids)} {K[')']} {K[';']}\n")
         scary_file.write(f"{K['return']} {K['0']} {K[';']}\n")
         scary_file.write(K["}"] + "\n")
-
-    os.system("make scary")
 
 
 if __name__ == "__main__":
