@@ -5,8 +5,8 @@ import random
 import os
 
 
-def write_define(f, token, string):
-    f.write(f"#define {token} {string}\n")
+def define(identifier, letter):
+    return f"#define {identifier} {letter}\n"
 
 
 def random_id():
@@ -14,62 +14,43 @@ def random_id():
 
 
 def main():
-    say = str(input("What to say: "))
-
-    saybit = list(say)
+    what_to_say = str(input("What to say: "))
 
     ids = []
 
-    with open("scary.c", "w+") as scaryfile:
-        scaryfile.write("#include <stdio.h>\n\n")
+    with open("scary.c", "w+") as scary_file:
+        scary_file.write("#include <stdio.h>\n\n")
 
-        for bit in saybit:
+        for letter in what_to_say:
             identifier = random_id()
+            scary_file.write(f'#define {identifier} "{letter}"\n')
 
-            scaryfile.write(f'#define {identifier} "{bit}"\n')
             ids.append(identifier)
 
-        kw_int = random_id()
-        main_function = random_id()
-        left_paren = random_id()
-        right_paren = random_id()
-        left_brace = random_id()
-        right_brace = random_id()
-        printf_function = random_id()
-        semicolon = random_id()
-        kw_return = random_id()
-        zero = random_id()  # the 0 in "return 0;"
+        keywords = {
+            "int": random_id(),
+            "main": random_id(),
+            "(": random_id(),
+            ")": random_id(),
+            "{": random_id(),
+            "}": random_id(),
+            "printf": random_id(),
+            ";": random_id(),
+            "return": random_id(),
+            "0": random_id(),  # the 0 in "return 0;"
+        }
 
-        write_define(scaryfile, kw_int, "int")
-        write_define(scaryfile, main_function, "main")
+        for (keyword, identifier) in keywords:
+            scary_file.write(define(keyword, identifier))
 
-        write_define(scaryfile, left_paren, "(")
-        write_define(scaryfile, right_paren, ")")
+        K = keywords
 
-        write_define(scaryfile, left_brace, "{")
-        write_define(scaryfile, right_brace, "}")
-
-        write_define(scaryfile, printf_function, "printf")
-
-        write_define(scaryfile, semicolon, ";")
-
-        write_define(scaryfile, kw_return, "return")
-
-        write_define(scaryfile, zero, "0")
-
-        scaryfile.write(
-            f"\n{kw_int} {main_function} {left_paren} {right_paren} {left_brace}\n"
-        )
-
-        string = " ".join(ids)
-
-        scaryfile.write(
-            f"{printf_function} {left_paren} {string} {right_paren} {semicolon}\n"
-        )
-
-        scaryfile.write(f"{kw_return} {zero} {semicolon}\n")
-
-        scaryfile.write(right_brace + "\n")
+        # TODO: Make a function that takes a tuple of tokens and converts them to a string
+        # with their new identifier
+        scary_file.write(f"\n{K['int']} {K['main']} {K['(']} {K[')']} {K['{']}\n")
+        scary_file.write(f"{K['printf']} {K['(']} {' '.join(ids)} {K[')']} {K[';']}\n")
+        scary_file.write(f"{K['return']} {K['0']} {K[';']}\n")
+        scary_file.write(K["}"] + "\n")
 
     os.system("make scary")
 
