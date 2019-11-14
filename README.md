@@ -1,6 +1,6 @@
 # scarify
 
-`scarify` makes `Hello, World!` look suuuuper scary. Because yeah,
+`scarify` makes "Hello, World!" look suuuuper scary. Because yeah,
 
 ```c
 #include <stdio.h>
@@ -38,9 +38,3 @@ E10
 _is_ valid C.
 
 It probably works with any string up to 52 characters.
-
-# Things I want to do to make it even scarier:
-
-- Randomly indent code
-- Put `#define`s in a random order
-- add more `#define`s for characters that occur regularly (`;` etc)
