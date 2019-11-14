@@ -4,52 +4,74 @@ import string
 import random
 
 
-def define(identifier, letter):
-    return f"#define {identifier} {letter}\n"
+class Scarifier:
+    def __init__(self):
+        self._tokens = {
+            "int": Scarifier._random_id(),
+            "main": Scarifier._random_id(),
+            "(": Scarifier._random_id(),
+            ")": Scarifier._random_id(),
+            "{": Scarifier._random_id(),
+            "}": Scarifier._random_id(),
+            "printf": Scarifier._random_id(),
+            ";": Scarifier._random_id(),
+            "return": Scarifier._random_id(),
+            "0": Scarifier._random_id(),  # the 0 in "return 0;"
+        }
 
+    @staticmethod
+    def _define(identifier, token):
+        return f"#define {identifier} {token}\n"
 
-def random_id():
-    return random.choice(string.ascii_letters) + str(random.randint(1, 100000))
+    @staticmethod
+    def _random_id():
+        return random.choice(string.ascii_letters) + str(random.randint(1, 100000))
+
+    def _tokens_to_identifier(self, tokens, with_newline=True):
+        identifier = []
+
+        for token in tokens:
+            identifier.append(self._tokens[token])
+
+        if with_newline:
+            return " ".join(identifier) + "\n"
+
+        return " ".join(identifier)
+
+    def make_scary(self, text):
+        source_code = "#include <stdio.h>\n\n"
+        ids = []
+
+        for letter in text:
+            identifier = Scarifier._random_id()
+            source_code += Scarifier._define(identifier, f'"{letter}"')
+
+            ids.append(identifier)
+
+        for (token, identifier) in self._tokens.items():
+            source_code += Scarifier._define(identifier, token)
+
+        source_code += "\n"
+
+        source_code += self._tokens_to_identifier(("int", "main", "(", ")", "{"))
+
+        source_code += self._tokens_to_identifier(("printf", "("), with_newline=False)
+        source_code += " " + " ".join(ids)
+        source_code += " " + self._tokens_to_identifier((")", ";"))
+
+        source_code += self._tokens_to_identifier(("return", "0", ";"))
+        source_code += self._tokens_to_identifier(("}"))
+
+        return source_code
 
 
 def main():
     what_to_say = str(input("What to say: "))
-
-    ids = []
+    scarifier = Scarifier()
+    scary_source_code = scarifier.make_scary(what_to_say)
 
     with open("scary.c", "w+") as scary_file:
-        scary_file.write("#include <stdio.h>\n\n")
-
-        for letter in what_to_say:
-            identifier = random_id()
-            scary_file.write(f'#define {identifier} "{letter}"\n')
-
-            ids.append(identifier)
-
-        tokens = {
-            "int": random_id(),
-            "main": random_id(),
-            "(": random_id(),
-            ")": random_id(),
-            "{": random_id(),
-            "}": random_id(),
-            "printf": random_id(),
-            ";": random_id(),
-            "return": random_id(),
-            "0": random_id(),  # the 0 in "return 0;"
-        }
-
-        for (token, identifier) in tokens.items():
-            scary_file.write(define(token, identifier))
-
-        T = tokens
-
-        # TODO: Make a function that takes a tuple of tokens and converts them to a string
-        # with their new identifier
-        scary_file.write(f"\n{T['int']} {T['main']} {T['(']} {T[')']} {T['{']}\n")
-        scary_file.write(f"{T['printf']} {T['(']} {' '.join(ids)} {T[')']} {T[';']}\n")
-        scary_file.write(f"{T['return']} {T['0']} {T[';']}\n")
-        scary_file.write(T["}"] + "\n")
+        scary_file.write(scary_source_code)
 
 
 if __name__ == "__main__":
