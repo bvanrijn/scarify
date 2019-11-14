@@ -63,7 +63,7 @@ class Scarifier:
         source_code += " " + self._tokens_to_replacements([")", ";"])
 
         source_code += self._tokens_to_replacements(["return", "0", ";"])
-        source_code += self._tokens_to_identifier(["}"])
+        source_code += self._tokens_to_replacements(["}"])
 
         return source_code
 
