@@ -10,7 +10,7 @@ jobs:
         with:
           python-version: 3.7
       - name: Install Pipenv
-        run: pip install pipenv==pipenv-2018.11.26
+        run: pip install pipenv==2018.11.26
       - name: Install dependencies
         run: pipenv install --deploy --dev
       - name: Check code formatting
